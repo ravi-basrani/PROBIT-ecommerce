@@ -15,6 +15,7 @@ import android.graphics.Color;
 import android.graphics.drawable.GradientDrawable;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
+import android.provider.Telephony;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.WindowManager;
@@ -24,6 +25,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.myapp.Common.LoginSignup.RetailerStartupScreen;
 import com.example.myapp.HelperClasses.HomeAdapter.CategoriesAdapter;
@@ -32,6 +34,8 @@ import com.example.myapp.HelperClasses.HomeAdapter.FeaturedAdapter;
 import com.example.myapp.HelperClasses.HomeAdapter.FeaturedHelperClass;
 import com.example.myapp.HelperClasses.HomeAdapter.MostViewedAdapter;
 import com.example.myapp.HelperClasses.HomeAdapter.MostViewedHelperClass;
+import com.example.myapp.ProfileMine;
+import com.example.myapp.ProfileMine;
 import com.example.myapp.R;
 import com.example.myapp.Settings;
 import com.example.myapp.User.Activities.cart;
@@ -61,6 +65,7 @@ public class UserDashboard extends AppCompatActivity implements NavigationView.O
 
     DrawerLayout drawerLayout;
     NavigationView navigationView;
+
 
 
     @Override
@@ -288,6 +293,11 @@ public class UserDashboard extends AppCompatActivity implements NavigationView.O
             case R.id.settings:
                 Intent i = new Intent(this, Settings.class);
                 startActivity(i);
+                break;
+            case R.id.nav_profile:
+                Intent j = new Intent(this, ProfileMine.class);
+                startActivity(j);
+                break;
         }
         return true;
     }
