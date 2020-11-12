@@ -26,7 +26,7 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
-
+import android.widget.ArrayAdapter;
 import com.example.myapp.Common.LoginSignup.RetailerStartupScreen;
 import com.example.myapp.HelperClasses.HomeAdapter.CategoriesAdapter;
 import com.example.myapp.HelperClasses.HomeAdapter.CategoriesHelperClass;
@@ -37,11 +37,12 @@ import com.example.myapp.HelperClasses.HomeAdapter.MostViewedHelperClass;
 import com.example.myapp.ProfileMine;
 import com.example.myapp.ProfileMine;
 import com.example.myapp.R;
+import android.widget.SearchView;
 import com.example.myapp.Settings;
 import com.example.myapp.User.Activities.cart;
 import com.example.myapp.User.Activities.shops;
 import com.google.android.material.navigation.NavigationView;
-
+import android.widget.ListView;
 import java.util.ArrayList;
 
 public class UserDashboard extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener{
@@ -66,6 +67,9 @@ public class UserDashboard extends AppCompatActivity implements NavigationView.O
     DrawerLayout drawerLayout;
     NavigationView navigationView;
 
+    SearchView searchView;
+    ListView listView;
+    ArrayAdapter<FeaturedHelperClass> adapterr;
 
 
     @Override
@@ -95,7 +99,8 @@ public class UserDashboard extends AppCompatActivity implements NavigationView.O
         t12 = findViewById(R.id.text11);
         t13 = findViewById(R.id.text12);
 
-
+        searchView = (SearchView) findViewById(R.id.searchView);
+        listView = (ListView) findViewById(R.id.lv1);
 
         drawerLayout = findViewById(R.id.drawer_layout);
         navigationView = findViewById(R.id.navigation_view);
@@ -312,7 +317,7 @@ public class UserDashboard extends AppCompatActivity implements NavigationView.O
         featuredRecycler.setHasFixedSize(true);
         featuredRecycler.setLayoutManager(new LinearLayoutManager(this,LinearLayoutManager.HORIZONTAL,false));
 
-        ArrayList<FeaturedHelperClass> featuredLocations = new ArrayList<>();
+        final ArrayList<FeaturedHelperClass> featuredLocations = new ArrayList<>();
 
         featuredLocations.add(new FeaturedHelperClass(R.drawable.chanel,"Chanel","fghjkkjhgfddertghjuytrfg"));
         featuredLocations.add(new FeaturedHelperClass(R.drawable.starbucks,"Star Buck's","fghjkkjhgfddertghjuytrfg"));
@@ -320,6 +325,28 @@ public class UserDashboard extends AppCompatActivity implements NavigationView.O
 
         adapter = new FeaturedAdapter(featuredLocations);
         featuredRecycler.setAdapter(adapter);
+
+        adapterr=new ArrayAdapter<FeaturedHelperClass>(this, android.R.layout.simple_list_item_1,featuredLocations); ;
+        listView.setAdapter(adapterr);
+
+        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+
+                if(featuredLocations.contains(query)){
+                    adapterr.getFilter().filter(query);
+                }else{
+                    Toast.makeText(UserDashboard.this, "No Match found",Toast.LENGTH_LONG).show();
+                }
+                return false;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String newText) {
+                //    adapter.getFilter().filter(newText);
+                return false;
+            }
+        });
 
         GradientDrawable gradient1 = new GradientDrawable(GradientDrawable.Orientation.LEFT_RIGHT,new int[]{0xffeff400,0xffaff600});
 
